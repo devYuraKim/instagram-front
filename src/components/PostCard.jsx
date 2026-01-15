@@ -1,9 +1,9 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
-import { likePost, unlikePost, deletePost, getImageUrl } from '../api';
-import CommentList from './CommentList';
-import '../styles/PostCard.css';
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
+import { likePost, unlikePost, deletePost, getImageUrl } from "../api";
+import CommentList from "./CommentList";
+import "../styles/PostCard.css";
 
 const PostCard = ({ post, onUpdate, onDelete, showComments = false }) => {
   const { user } = useAuth();
@@ -25,29 +25,34 @@ const PostCard = ({ post, onUpdate, onDelete, showComments = false }) => {
         setLikeCount((prev) => prev + 1);
       }
     } catch (error) {
-      console.error('좋아요 처리 실패:', error);
+      console.error("좋아요 처리 실패:", error);
     }
   };
 
   const handleDelete = async () => {
-    if (window.confirm('게시물을 삭제하시겠습니까?')) {
+    if (window.confirm("게시물을 삭제하시겠습니까?")) {
       try {
         await deletePost(post.id);
         if (onDelete) onDelete(post.id);
       } catch (error) {
-        console.error('삭제 실패:', error);
+        console.error("삭제 실패:", error);
       }
     }
   };
 
-  const isOwner = user && post.author && Number(user.id) === Number(post.author.id);
+  const isOwner =
+    user && post.author && Number(user.id) === Number(post.author.id);
 
   return (
     <article className="post-card">
       <header className="post-header">
         <Link to={`/profile/${post.author?.username}`} className="author-info">
           {post.author?.profileImageUrl ? (
-            <img src={getImageUrl(post.author.profileImageUrl)} alt="" className="author-avatar" />
+            <img
+              src={getImageUrl(post.author.profileImageUrl)}
+              alt=""
+              className="author-avatar"
+            />
           ) : (
             <div className="author-avatar default">
               {post.author?.username?.[0]?.toUpperCase()}
@@ -70,11 +75,11 @@ const PostCard = ({ post, onUpdate, onDelete, showComments = false }) => {
 
       <div className="post-actions">
         <button
-          className={`like-btn ${liked ? 'liked' : ''}`}
+          className={`like-btn ${liked ? "liked" : ""}`}
           onClick={handleLike}
           disabled={!user}
         >
-          {liked ? '♥' : '♡'}
+          {liked ? "❤️ " : "🤍"}
         </button>
         <button
           className="comment-btn"
@@ -102,12 +107,10 @@ const PostCard = ({ post, onUpdate, onDelete, showComments = false }) => {
         </button>
       )}
 
-      {showAllComments && (
-        <CommentList postId={post.id} />
-      )}
+      {showAllComments && <CommentList postId={post.id} />}
 
       <div className="post-time">
-        {new Date(post.createdAt).toLocaleDateString('ko-KR')}
+        {new Date(post.createdAt).toLocaleDateString("ko-KR")}
       </div>
     </article>
   );

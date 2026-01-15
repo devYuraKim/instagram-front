@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
-import { getPosts } from '../api';
-import PostCard from '../components/PostCard';
-import '../styles/Feed.css';
+import { useState, useEffect } from "react";
+import { getPosts } from "../api";
+import PostCard from "../components/PostCard";
+import "../styles/Feed.css";
 
 const AllPostsPage = () => {
   const [posts, setPosts] = useState([]);
@@ -16,7 +16,7 @@ const AllPostsPage = () => {
       const response = await getPosts();
       setPosts(response.data.data);
     } catch (error) {
-      console.error('게시물 로드 실패:', error);
+      console.error("게시물 로드 실패:", error);
     } finally {
       setLoading(false);
     }

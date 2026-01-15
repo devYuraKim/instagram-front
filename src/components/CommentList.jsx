@@ -1,13 +1,13 @@
-import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
-import { getComments, createComment, deleteComment } from '../api';
-import '../styles/CommentList.css';
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
+import { getComments, createComment, deleteComment } from "../api";
+import "../styles/CommentList.css";
 
 const CommentList = ({ postId }) => {
   const { user } = useAuth();
   const [comments, setComments] = useState([]);
-  const [newComment, setNewComment] = useState('');
+  const [newComment, setNewComment] = useState("");
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -19,7 +19,7 @@ const CommentList = ({ postId }) => {
       const response = await getComments(postId);
       setComments(response.data.data);
     } catch (error) {
-      console.error('댓글 로드 실패:', error);
+      console.error("댓글 로드 실패:", error);
     } finally {
       setLoading(false);
     }
@@ -32,9 +32,9 @@ const CommentList = ({ postId }) => {
     try {
       const response = await createComment(postId, { content: newComment });
       setComments((prev) => [...prev, response.data.data]);
-      setNewComment('');
+      setNewComment("");
     } catch (error) {
-      console.error('댓글 작성 실패:', error);
+      console.error("댓글 작성 실패:", error);
     }
   };
 
@@ -43,7 +43,7 @@ const CommentList = ({ postId }) => {
       await deleteComment(postId, commentId);
       setComments((prev) => prev.filter((c) => c.id !== commentId));
     } catch (error) {
-      console.error('댓글 삭제 실패:', error);
+      console.error("댓글 삭제 실패:", error);
     }
   };
 
@@ -55,18 +55,23 @@ const CommentList = ({ postId }) => {
     <div className="comment-list">
       {comments.map((comment) => (
         <div key={comment.id} className="comment">
-          <Link to={`/profile/${comment.author?.username}`} className="comment-author">
+          <Link
+            to={`/profile/${comment.author?.username}`}
+            className="comment-author"
+          >
             {comment.author?.username}
           </Link>
           <span className="comment-content">{comment.content}</span>
-          {user && comment.author && Number(user.id) === Number(comment.author.id) && (
-            <button
-              className="comment-delete"
-              onClick={() => handleDelete(comment.id)}
-            >
-              ×
-            </button>
-          )}
+          {user &&
+            comment.author &&
+            Number(user.id) === Number(comment.author.id) && (
+              <button
+                className="comment-delete"
+                onClick={() => handleDelete(comment.id)}
+              >
+                ×
+              </button>
+            )}
         </div>
       ))}
 

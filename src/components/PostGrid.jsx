@@ -1,6 +1,6 @@
-import { Link } from 'react-router-dom';
-import { getImageUrl } from '../api';
-import '../styles/PostGrid.css';
+import { Link } from "react-router-dom";
+import { getImageUrl } from "../api";
+import "../styles/PostGrid.css";
 
 const PostGrid = ({ posts }) => {
   if (!posts || posts.length === 0) {
@@ -19,7 +19,7 @@ const PostGrid = ({ posts }) => {
             </div>
           )}
           <div className="grid-overlay">
-            <span>♥ {post.likeCount || 0}</span>
+            <span>❤️ {post.likeCount || 0}</span>
             <span>💬 {post.commentCount || 0}</span>
           </div>
         </Link>
