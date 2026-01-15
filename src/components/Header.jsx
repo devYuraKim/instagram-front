@@ -1,7 +1,7 @@
-import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
-import { getImageUrl } from '../api';
-import '../styles/Header.css';
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
+import { getImageUrl } from "../api";
+import "../styles/Header.css";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -9,14 +9,14 @@ const Header = () => {
 
   const handleLogout = () => {
     logout();
-    navigate('/login');
+    navigate("/login");
   };
 
   return (
     <header className="header">
       <div className="header-content">
         <Link to="/" className="logo">
-          Instagram
+          Hullo
         </Link>
 
         <nav className="nav">
@@ -34,11 +34,16 @@ const Header = () => {
               <Link to="/create" className="nav-link">
                 +
               </Link>
-              <Link to={`/profile/${user?.username}`} className="nav-link profile-link">
+              <Link
+                to={`/profile/${user?.username}`}
+                className="nav-link profile-link"
+              >
                 {user?.profileImageUrl ? (
                   <img src={getImageUrl(user.profileImageUrl)} alt="프로필" />
                 ) : (
-                  <span className="avatar">{user?.username?.[0]?.toUpperCase()}</span>
+                  <span className="avatar">
+                    {user?.username?.[0]?.toUpperCase()}
+                  </span>
                 )}
               </Link>
               <button onClick={handleLogout} className="logout-btn">
